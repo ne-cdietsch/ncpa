@@ -124,7 +124,7 @@ detect_python() {
 
             log "Running: brew install --overwrite python"
             if ! run_as_user brew install --overwrite python; then
-                error "brew install python failed. Please install Python 3.8+ manually."
+                error "brew install python failed. Please install Python 3.13+ manually."
                 return 1
             fi
 
@@ -143,7 +143,7 @@ detect_python() {
             # Add Homebrew Python to candidates
             python_candidates+=("/opt/homebrew/bin/python3" "/usr/local/bin/python3")
         else
-            error "Homebrew not found. Please install Homebrew and Python 3.8+ manually."
+            error "Homebrew not found. Please install Homebrew and Python 3.13+ manually."
         fi
     fi
 
@@ -179,7 +179,7 @@ detect_python() {
                                 newest_version="$py_version"
                             fi
                         else
-                            log "⚠ Python $py_version at $python_cmd is too old (need >= 3.8)"
+                            log "⚠ Python $py_version at $python_cmd is too old (need >= 3.13)"
                         fi
                     else
                         log "⚠ Failed to parse version for $python_cmd (output: '$version_output', parsed: '$py_version')"
@@ -225,13 +225,13 @@ detect_python() {
     # Compare installed vs latest available
     if [ "$newest_major" -gt "$latest_major" ] || { [ "$newest_major" -eq "$latest_major" ] && [ "$newest_minor" -ge "$latest_minor" ]; }; then
         # Installed Python is newer or equal to package manager's version
-        if [ "$newest_major" -ge 3 ] && [ "$newest_minor" -ge 8 ]; then
+        if [ "$newest_major" -ge 3 ] && [ "$newest_minor" -ge 13 ]; then
             PYTHON_EXECUTABLE="$newest_cmd"
             PYTHON_VERSION="$newest_version"
             log "✓ Using newest installed Python $newest_version: $newest_cmd (newer or equal to package manager $latest_pkg_version)"
             return 0
         else
-            error "Newest installed Python ($newest_version) is too old (<3.8)."
+            error "Newest installed Python ($newest_version) is too old (<3.13)."
             return 1
         fi
     else
@@ -259,7 +259,7 @@ detect_python() {
             elif command -v zypper >/dev/null 2>&1; then
                 sudo zypper install -y python3 python3-venv
             else
-                error "No supported package manager found for Python installation. Please install Python 3.8+ manually."
+                error "No supported package manager found for Python installation. Please install Python 3.13+ manually."
                 return 1
             fi
         elif [ "$PLATFORM" = "macos" ]; then
@@ -267,11 +267,11 @@ detect_python() {
                 run_as_user brew update
                 run_as_user brew install --overwrite python
             else
-                error "Homebrew not found. Please install Homebrew and Python 3.8+ manually."
+                error "Homebrew not found. Please install Homebrew and Python 3.13+ manually."
                 return 1
             fi
         else
-            error "Automatic Python installation not supported for platform: $PLATFORM. Please install Python 3.8+ manually."
+            error "Automatic Python installation not supported for platform: $PLATFORM. Please install Python 3.13+ manually."
             return 1
         fi
         # Re-detect Python after installation
@@ -279,7 +279,7 @@ detect_python() {
         detect_python
         return $?
     fi
-    error "No suitable Python 3.8+ interpreter found and automatic installation failed."
+    error "No suitable Python 3.13+ interpreter found and automatic installation failed."
     return 1
 }
 
