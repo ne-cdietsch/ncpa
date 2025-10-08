@@ -278,6 +278,14 @@ export AGENT_DIR
 # Load platform-specific configurations (but skip their Python setup)
 export SKIP_PYTHON=1  # Tell platform scripts to skip Python installation
 
+# Check Python version
+PYTHON_MINOR_VERSION=$(python3 -c "import sys; print(sys.version_info.minor)" 2>/dev/null || echo 1)
+if [ $PYTHON_MINOR_VERSION -lt 11 ]; then
+    echo "WARNING: Python 3.11 or higher is highly recommended to build NCPA"
+    echo "We will attempt to build a newer version of python from source..."
+    SKIP_PYTHON=0 # Do not skip build python if too old
+fi
+
 if [ "$UNAME" == "Linux" ]; then
     export PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/root/bin:$PATH
     . $BUILD_DIR/linux/setup.sh
