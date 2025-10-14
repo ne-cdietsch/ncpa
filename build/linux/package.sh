@@ -52,7 +52,7 @@ echo -e "***** Build rpm package"
         parch=`uname -m`
         QA_RPATHS='$[ 0x0002 ]' rpmbuild $BUILD_RPM_DIR/SPECS/ncpa.spec -bb --target=armhf --define "_topdir $BUILD_RPM_DIR" --define "_arch armhf" >> $BUILD_DIR/build.log
     else
-        QA_RPATHS='$[ 0x0002 ]' rpmbuild $BUILD_RPM_DIR/SPECS/ncpa.spec -bb --define "_topdir $BUILD_RPM_DIR" >> $BUILD_DIR/build.log
+        QA_RPATHS='$[ 0x0002 ]' sudo rpmbuild $BUILD_RPM_DIR/SPECS/ncpa.spec -bb --define "_topdir $BUILD_RPM_DIR" >> $BUILD_DIR/build.log
     fi
 
     echo -e "***** Build rpm package - find RPMs and copy to build dir"
@@ -75,7 +75,7 @@ if [ "$distro" == "Debian" ] || [ "$distro" == "Ubuntu" ] || [ "$distro" == "Ras
     if [ "$dist_ver" == "centos7" ]; then
         yum -y install alien
     else
-        apt-get -y install alien
+        sudo apt-get -y install alien
     fi
 
     echo -e "***** Convert to .deb - mk debbuild dir"
