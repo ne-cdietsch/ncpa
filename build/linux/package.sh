@@ -41,14 +41,14 @@ echo -e "***** Build rpm package"
     sudo mkdir -v $BUILD_RPM_DIR
     sudo chmod -v 766 $BUILD_RPM_DIR
     echo -e "***** Build rpm package - make directories"
-    mkdir -p $BUILD_RPM_DIR/SPECS
-    mkdir -p $BUILD_RPM_DIR/SRPMS
-    mkdir -p $BUILD_RPM_DIR/RPMS
-    mkdir -p $BUILD_RPM_DIR/SOURCES
-    mkdir -p $BUILD_RPM_DIR/BUILD
-    cp -f $BUILD_DIR/ncpa-$NCPA_VER.tar.gz $BUILD_RPM_DIR/SOURCES/
-    rm -f $BUILD_RPM_DIR/SPECS/ncpa.spec
-    cp -f $BUILD_DIR/ncpa.spec $BUILD_RPM_DIR/SPECS/
+    mkdir $BUILD_RPM_DIR/SPECS
+    mkdir $BUILD_RPM_DIR/SRPMS
+    mkdir $BUILD_RPM_DIR/RPMS
+    mkdir $BUILD_RPM_DIR/SOURCES
+    mkdir $BUILD_RPM_DIR/BUILD
+    cp -v -f $BUILD_DIR/ncpa-$NCPA_VER.tar.gz $BUILD_RPM_DIR/SOURCES/
+    rm -v -f $BUILD_RPM_DIR/SPECS/ncpa.spec
+    cp -v -f $BUILD_DIR/ncpa.spec $BUILD_RPM_DIR/SPECS/
 
     echo -e "***** Build rpm package - rpmbuild"
     if [ "$distro" == "Raspbian" ]; then
