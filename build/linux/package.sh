@@ -37,22 +37,25 @@ echo -e "***** Build rpm package"
         echo -e "***** Remove old rpm package directories"
         rm -r $BUILD_RPM_DIR
     fi
+    echo -e "***** Set Permissions on build dir"
+    sudo mkdir -p $BUILD_RPM_DIR
+    sudo chmod 755 $BUILD_RPM_DIR
     echo -e "***** Build rpm package - make directories"
-    sudo mkdir -p $BUILD_RPM_DIR/SPECS
-    sudo mkdir -p $BUILD_RPM_DIR/SRPMS
-    sudo mkdir -p $BUILD_RPM_DIR/RPMS
-    sudo mkdir -p $BUILD_RPM_DIR/SOURCES
-    sudo mkdir -p $BUILD_RPM_DIR/BUILD
-    sudo cp -f $BUILD_DIR/ncpa-$NCPA_VER.tar.gz $BUILD_RPM_DIR/SOURCES/
-    sudo rm -f $BUILD_RPM_DIR/SPECS/ncpa.spec
-    sudo cp -f $BUILD_DIR/ncpa.spec $BUILD_RPM_DIR/SPECS/
+    mkdir -p $BUILD_RPM_DIR/SPECS
+    mkdir -p $BUILD_RPM_DIR/SRPMS
+    mkdir -p $BUILD_RPM_DIR/RPMS
+    mkdir -p $BUILD_RPM_DIR/SOURCES
+    mkdir -p $BUILD_RPM_DIR/BUILD
+    cp -f $BUILD_DIR/ncpa-$NCPA_VER.tar.gz $BUILD_RPM_DIR/SOURCES/
+    rm -f $BUILD_RPM_DIR/SPECS/ncpa.spec
+    cp -f $BUILD_DIR/ncpa.spec $BUILD_RPM_DIR/SPECS/
 
     echo -e "***** Build rpm package - rpmbuild"
     if [ "$distro" == "Raspbian" ]; then
         parch=`uname -m`
         QA_RPATHS='$[ 0x0002 ]' rpmbuild $BUILD_RPM_DIR/SPECS/ncpa.spec -bb --target=armhf --define "_topdir $BUILD_RPM_DIR" --define "_arch armhf" >> $BUILD_DIR/build.log
     else
-        QA_RPATHS='$[ 0x0002 ]' sudo rpmbuild $BUILD_RPM_DIR/SPECS/ncpa.spec -bb --define "_topdir $BUILD_RPM_DIR" >> $BUILD_DIR/build.log
+        QA_RPATHS='$[ 0x0002 ]' rpmbuild $BUILD_RPM_DIR/SPECS/ncpa.spec -bb --define "_topdir $BUILD_RPM_DIR" >> $BUILD_DIR/build.log
     fi
 
     echo -e "***** Build rpm package - find RPMs and copy to build dir"
@@ -75,7 +78,7 @@ if [ "$distro" == "Debian" ] || [ "$distro" == "Ubuntu" ] || [ "$distro" == "Ras
     if [ "$dist_ver" == "centos7" ]; then
         yum -y install alien
     else
-        sudo apt-get -y install alien
+        apt-get -y install alien
     fi
 
     echo -e "***** Convert to .deb - mk debbuild dir"
