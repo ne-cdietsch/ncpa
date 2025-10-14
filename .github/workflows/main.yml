@@ -13,8 +13,4 @@ jobs:
 
       - name: Build project
         run: |
-          export RUNNER_ALLOW_RUNASROOT="1"
-          whoami
-          sudo su -
-          whoami
           ./build/build.sh

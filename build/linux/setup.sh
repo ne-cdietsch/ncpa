@@ -55,17 +55,17 @@ install_prereqs() {
         fi
 
         # Install core system packages (no Python packages - handled by venv)
-        apt-get -y update
+        sudo apt-get -y update
         if [[ "$ssl_maj_ver" -lt 3 ]]; then
-            echo -e "***** linux/setup.sh - apt-get install (excluding SSL, including Python build deps)"
-            apt-get -y install gcc g++ rpm libffi-dev sqlite3 libsqlite3-dev wget alien \
+            echo -e "***** linux/setup.sh - sudo apt-get install (excluding SSL, including Python build deps)"
+            sudo apt-get -y install gcc g++ rpm libffi-dev sqlite3 libsqlite3-dev wget alien \
                                python3-dev python3-venv python3-pip build-essential \
                                libbz2-dev libreadline-dev libsqlite3-dev libncurses5-dev \
                                libncursesw5-dev tk-dev libgdbm-dev libc6-dev \
                                --allow-unauthenticated
         else
-            echo -e "***** linux/setup.sh - apt-get install (including SSL and Python build deps)"
-            apt-get -y install gcc g++ zlib1g-dev openssl libssl-dev rpm libffi-dev sqlite3 \
+            echo -e "***** linux/setup.sh - sudo apt-get install (including SSL and Python build deps)"
+            sudo apt-get -y install gcc g++ zlib1g-dev openssl libssl-dev rpm libffi-dev sqlite3 \
                                libsqlite3-dev wget alien python3-dev python3-venv python3-pip \
                                build-essential libbz2-dev libreadline-dev libncurses5-dev \
                                libncursesw5-dev tk-dev libgdbm-dev libc6-dev \
@@ -74,9 +74,9 @@ install_prereqs() {
 
         # debian-builder is not nessery anymore when Debian 12 or Ubuntu24
         if [ "$dist" == "debian10" ] || [ "$dist" == "debian11" ] || [ "$dist" == "ubuntu20" ] || [ "$dist" == "ubuntu22" ]; then
-            echo -e "***** linux/setup.sh - apt-get install debian-builder"
-            apt-get -y update
-            apt-get -y install debian-builder --allow-unauthenticated
+            echo -e "***** linux/setup.sh - sudo apt-get install debian-builder"
+            sudo apt-get -y update
+            sudo apt-get -y install debian-builder --allow-unauthenticated
         fi
     elif [ "$distro" == "CentOS" ] || [ "$distro" == "RHEL" ] || [ "$distro" == "Oracle" ] || [ "$distro" == "CloudLinux" ] || [ "$distro" == "Fedora" ]; then
         echo -e "***** linux/setup.sh - install_prereqs() - CentOS/RHEL"
@@ -177,7 +177,7 @@ install_prereqs() {
 
     elif [ "$distro" == "Raspbian" ]; then
 
-        apt-get install gcc openssl sqlite3 libsqlite3-dev libffi-dev rpm git debian-builder alien libssl-dev -y
+        sudo apt-get install gcc openssl sqlite3 libsqlite3-dev libffi-dev rpm git debian-builder alien libssl-dev -y
 
     else
 
