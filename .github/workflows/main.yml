@@ -1,4 +1,4 @@
-name: CentOS 9 Build
+name: Ubuntu Latest Build
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
 
 jobs:
   build-and-test:
-    runs-on: self-hosted # This targets your CentOS 9 self-hosted runner
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
