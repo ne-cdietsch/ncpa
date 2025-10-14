@@ -38,8 +38,8 @@ echo -e "***** Build rpm package"
         rm -r $BUILD_RPM_DIR
     fi
     echo -e "***** Set Permissions on build dir"
-    sudo mkdir -p $BUILD_RPM_DIR
-    sudo chmod 766 $BUILD_RPM_DIR
+    sudo mkdir -v $BUILD_RPM_DIR
+    sudo chmod -v 766 $BUILD_RPM_DIR
     echo -e "***** Build rpm package - make directories"
     mkdir -p $BUILD_RPM_DIR/SPECS
     mkdir -p $BUILD_RPM_DIR/SRPMS
