@@ -13,7 +13,4 @@ jobs:
 
       - name: Build project
         run: |
-          useradd -m nagios
-          echo "nagios:password" | chpasswd
-          su - nagios -c "echo 'Hello from nagios'"
-          # ./build/build.sh
+          ./build/build.sh
