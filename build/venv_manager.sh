@@ -270,12 +270,12 @@ detect_python() {
     if [ "$PLATFORM" = "linux" ]; then
         if command -v apt-get >/dev/null 2>&1; then
             # Debian/Ubuntu
-            sudo apt-get update
+            sudo apt-get update -y
             if ! apt-cache policy "${PY_PKG_VER}" 2>/dev/null | grep -q Candidate; then
                 log "Package ${PY_PKG_VER} not found in default repos. Adding deadsnakes PPA…"
                 sudo apt-get install -y software-properties-common || true
                 sudo add-apt-repository -y ppa:deadsnakes/ppa
-                sudo apt-get update
+                sudo apt-get update -y
             fi
             # Install exact 3.13 and its venv package if available
             sudo apt-get install -y "${PY_PKG_VER}" "${PY_VENV_PKG}" || {
