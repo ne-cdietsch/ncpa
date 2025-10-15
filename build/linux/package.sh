@@ -114,7 +114,7 @@ if [ "$distro" == "Debian" ] || [ "$distro" == "Ubuntu" ] || [ "$distro" == "Ras
                 # Now build the package
                 echo -e "***** Building deb package with fixed rules"
                 cd "$debdir"
-                dpkg-buildpackage -b -uc -us >> $BUILD_DIR/build.log 2>&1
+                sudo bash -c "dpkg-buildpackage -b -uc -us >> $BUILD_DIR/build.log 2>&1"
                 cd ..
             fi
         fi
