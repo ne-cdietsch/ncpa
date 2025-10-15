@@ -28,3 +28,9 @@ jobs:
           echo "###  Verifying tar.gz package  ###"
           ls -al *.tar.gz
           echo "######################################"
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-artifacts
+          path: build/ncpa*.*
