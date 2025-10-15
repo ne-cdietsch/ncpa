@@ -5,7 +5,7 @@ on:
     branches: [ 'development' ]
 
 jobs:
-  build-and-test:
+  build-and-verify:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -15,3 +15,8 @@ jobs:
         working-directory: build
         run: |
           ./build.sh
+
+      - name: Verify build artifacts
+        working-directory: build
+        run: |
+          ls -al ncpa-3*.*
