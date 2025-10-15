@@ -18,3 +18,17 @@ jobs:
       - name: Check python version
         run: |
           python --version
+
+      - name: Build on Linux/macOS
+        working-directory: build
+        if: runner.os != 'Windows'
+        run: |
+          echo "Running standard build script for Linux/macOS"
+          ./build.sh
+
+      - name: Build on Windows
+        working-directory: build
+        if: runner.os == 'Windows'
+        run: |
+          echo "Running Windows-specific build script"
+          build_windows.bat
