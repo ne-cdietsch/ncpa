@@ -124,8 +124,8 @@ if [ "$distro" == "Debian" ] || [ "$distro" == "Ubuntu" ] || [ "$distro" == "Ras
     cp -v debbuild/*.deb .
     cp -v debbuild/*.rpm .
 
-    if [ "$dist_ver" != "centos7" ]; then
-        sudo rm -rf *.rpm
-    fi
+    # if [ "$dist_ver" != "centos7" ]; then
+    #     sudo rm -rf *.rpm
+    # fi
     sudo rm -rf debbuild
 fi

@@ -19,4 +19,12 @@ jobs:
       - name: Verify build artifacts
         working-directory: build
         run: |
-          ls -al
+          echo "###  Verifying deb package  ###"
+          ls -al *.deb
+          ehco "######################################"
+          echo "###  Verifying rpm package  ###"
+          ls -al *.rpm
+          echo "######################################"
+          echo "###  Verifying tar.gz package  ###"
+          ls -al *.tar.gz
+          echo "######################################"

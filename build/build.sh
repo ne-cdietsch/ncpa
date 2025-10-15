@@ -1119,7 +1119,7 @@ if [ $BUILD_ONLY -eq 0 ]; then
     # Remove the build directory and tar.gz
     echo -e "\nClean up packaging dirs..."
     cd $BUILD_DIR
-    sudo rm -rf *.tar.gz
+    # sudo rm -rf *.tar.gz
     # sudo rm -rf ncpa-$NCPA_VER
 
 fi
