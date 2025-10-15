@@ -784,7 +784,7 @@ esac'
         # Run the build
         echo "Attempting to build cx_Freeze..."
         echo "Python binary: $PYTHONBIN"
-        sudo $PYTHONBIN setup.py build_exe | sudo tee $BUILD_DIR/build.log
+        $PYTHONBIN setup.py build_exe | sudo tee $BUILD_DIR/build.log
     fi
 
 
@@ -1119,7 +1119,7 @@ if [ $BUILD_ONLY -eq 0 ]; then
     # Remove the build directory and tar.gz
     echo -e "\nClean up packaging dirs..."
     cd $BUILD_DIR
-    # sudo rm -rf *.tar.gz
+    sudo rm -rf *.tar.gz
     # sudo rm -rf ncpa-$NCPA_VER
 
 fi
