@@ -50,9 +50,11 @@ echo -e "***** Build rpm package"
     echo -e "***** Build rpm package - rpmbuild"
     if [ "$distro" == "Raspbian" ]; then
         parch=`uname -m`
-        sudo QA_RPATHS='$[ 0x0002 ]' rpmbuild $BUILD_RPM_DIR/SPECS/ncpa.spec -bb --target=armhf --define "_topdir $BUILD_RPM_DIR" --define "_arch armhf" >> $BUILD_DIR/build.log
+        QA_RPATHS='$[ 0x0002 ]' rpmbuild $BUILD_RPM_DIR/SPECS/ncpa.spec -bb --target=armhf --define "_topdir $BUILD_RPM_DIR" --define "_arch armhf" >> $BUILD_DIR/build.log
     else
-        sudo QA_RPATHS='$[ 0x0002 ]' rpmbuild $BUILD_RPM_DIR/SPECS/ncpa.spec -bb --define "_topdir $BUILD_RPM_DIR" >> $BUILD_DIR/build.log
+        echo -e "***** Build rpm package - rpmbuild normal"
+        QA_RPATHS='$[ 0x0002 ]'
+        sudo rpmbuild $BUILD_RPM_DIR/SPECS/ncpa.spec -bb --define "_topdir $BUILD_RPM_DIR" >> $BUILD_DIR/build.log
     fi
 
     echo -e "***** Build rpm package - find RPMs and copy to build dir"
