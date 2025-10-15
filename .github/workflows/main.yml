@@ -1,11 +1,11 @@
-name: Ubuntu Latest Build
+name: Ubuntu Latest Builds
 
 on:
   push:
     branches: [ 'development' ]
 
 jobs:
-  build-and-verify:
+  build-and-upload:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -32,17 +32,20 @@ jobs:
       - name: Upload RPM artifact
         uses: actions/upload-artifact@v4
         with:
-          name: ncparpm-release
+          name: ncpa-rpm-release
           path: build/*.rpm
+          overwrite: true
 
       - name: Upload DEB artifact
         uses: actions/upload-artifact@v4
         with:
           name: ncpa-deb-release
           path: build/*.rpm
+          overwrite: true
 
       - name: Upload tarball artifact
         uses: actions/upload-artifact@v4
         with:
           name: ncpa-tarball-release
           path: build/*.tar.gz
+          overwrite: true
