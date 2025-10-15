@@ -19,6 +19,7 @@ jobs:
 
       - name: Check python version
         run: |
+          echo "Checking Python version on ${{ matrix.os }}"
           python --version
 
       - name: Build on Linux/macOS
@@ -31,7 +32,7 @@ jobs:
       - name: Build on Windows
         working-directory: build
         if: runner.os == 'Windows'
+        shell: cmd
         run: |
           echo "Running Windows-specific build script"
-          dir
           build_windows.bat
