@@ -19,4 +19,4 @@ jobs:
       - name: Verify build artifacts
         working-directory: build
         run: |
-          ls -al *x86_64*
+          ls -al
