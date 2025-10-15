@@ -95,7 +95,7 @@ if [ "$distro" == "Debian" ] || [ "$distro" == "Ubuntu" ] || [ "$distro" == "Ras
     if [ "$architecture" == "aarch64" ]; then
       alien -g -k -v --scripts --target=arm64 $rpm >> $BUILD_DIR/build.log
     else
-      bash -c "alien -g -k -v --scripts $rpm >> $BUILD_DIR/build.log"
+      sudo bash -c "alien -g -k -v --scripts $rpm >> $BUILD_DIR/build.log"
     fi
     echo -e "***** Convert to .deb - alien generate done"
 
