@@ -9,7 +9,9 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
+        # os: [ubuntu-latest, windows-latest, macos-latest]
+        os: [windows-latest]
+
 
     steps:
       - name: Checkout code
@@ -31,4 +33,5 @@ jobs:
         if: runner.os == 'Windows'
         run: |
           echo "Running Windows-specific build script"
+          dir
           build_windows.bat
