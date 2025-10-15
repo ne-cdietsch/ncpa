@@ -1,11 +1,11 @@
-name: Ubuntu Latest Builds
+name: Matrix Builds
 
 on:
   push:
-    branches: [ 'development' ]
+    branches: [ 'development-v2' ]
 
 jobs:
-  build-and-upload:
+  build-matrix:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -15,37 +15,3 @@ jobs:
         working-directory: build
         run: |
           ./build.sh
-
-      - name: Verify build artifacts
-        working-directory: build
-        run: |
-          echo "###  Verifying deb package  ###"
-          ls -al *.deb
-          echo "######################################"
-          echo "###  Verifying rpm package  ###"
-          ls -al *.rpm
-          echo "######################################"
-          echo "###  Verifying tar.gz package  ###"
-          ls -al *.tar.gz
-          echo "######################################"
-
-      - name: Upload RPM artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: ncpa-rpm-release
-          path: build/*.rpm
-          overwrite: true
-
-      - name: Upload DEB artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: ncpa-deb-release
-          path: build/*.rpm
-          overwrite: true
-
-      - name: Upload tarball artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: ncpa-tarball-release
-          path: build/*.tar.gz
-          overwrite: true
