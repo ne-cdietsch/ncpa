@@ -121,11 +121,11 @@ if [ "$distro" == "Debian" ] || [ "$distro" == "Ubuntu" ] || [ "$distro" == "Ras
     done
 
     cd $BUILD_DIR
-    cp debbuild/*.deb .
-    cp debbuild/*.rpm .
+    cp -v debbuild/*.deb .
+    cp -v debbuild/*.rpm .
 
     if [ "$dist_ver" != "centos7" ]; then
-        rm -rf *.rpm
+        sudo rm -rf *.rpm
     fi
-    rm -rf debbuild
+    sudo rm -rf debbuild
 fi
