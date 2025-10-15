@@ -29,8 +29,20 @@ jobs:
           ls -al *.tar.gz
           echo "######################################"
 
-      - name: Upload build artifacts
+      - name: Upload RPM artifact
         uses: actions/upload-artifact@v4
         with:
-          name: build-artifacts
-          path: build/ncpa*.*
+          name: ncparpm-release
+          path: build/*.rpm
+
+      - name: Upload DEB artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ncpa-deb-release
+          path: build/*.rpm
+
+      - name: Upload tarball artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ncpa-tarball-release
+          path: build/*.tar.gz
