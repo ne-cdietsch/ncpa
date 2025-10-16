@@ -1,0 +1,38 @@
+name: Matrix Builds
+
+on:
+  push:
+    branches: [ 'development-v3' ]
+
+jobs:
+  build-and-test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        # os: [ubuntu-latest, windows-latest, macos-latest]
+        os: [macos-latest]
+
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Check python version
+        run: |
+          echo "Checking Python version on ${{ matrix.os }}"
+          python --version
+
+      - name: Build on Linux/macOS
+        working-directory: build
+        if: runner.os != 'Windows'
+        run: |
+          echo "Running standard build script for Linux/macOS"
+          ./build.sh
+
+      - name: Build on Windows
+        working-directory: build
+        if: runner.os == 'Windows'
+        shell: cmd
+        run: |
+          echo "Running Windows-specific build script"
+          build_windows.bat
