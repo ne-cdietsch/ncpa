@@ -2,7 +2,7 @@ name: Matrix Builds
 
 on:
   push:
-    branches: [ 'development-v2' ]
+    branches: [ 'development-v4' ]
 
 jobs:
   build-and-test:
@@ -10,7 +10,7 @@ jobs:
     strategy:
       matrix:
         # os: [ubuntu-latest, windows-latest, macos-latest]
-        os: [macos-latest]
+        os: [ubuntu-latest]
 
 
     steps:
