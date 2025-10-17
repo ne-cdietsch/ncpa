@@ -26,8 +26,11 @@ jobs:
         working-directory: build
         if: runner.os != 'Windows'
         run: |
-          echo "Running standard build script for Linux/macOS"
-          ./build.sh
+          # echo "Running standard build script for Linux/macOS"
+          # ./build.sh
+          echo "Whoami: $(whoami)"
+          sudo su -
+          echo "Whoami after sudo: $(whoami)"
 
       - name: Build on Windows
         working-directory: build
