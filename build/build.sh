@@ -784,7 +784,7 @@ esac'
         # Run the build
         echo "Attempting to build cx_Freeze..."
         echo "Python binary: $PYTHONBIN"
-        sudo sh -c "$PYTHONBIN setup.py build_exe | tee $BUILD_DIR/build.log"
+        sudo bash -c "$PYTHONBIN setup.py build_exe | tee $BUILD_DIR/build.log"
     fi
 
 
