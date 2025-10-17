@@ -784,7 +784,8 @@ esac'
         # Run the build
         echo "Attempting to build cx_Freeze..."
         echo "Python binary: $PYTHONBIN"
-        sudo -E bash -c "$PYTHONBIN setup.py build_exe | sudo tee $BUILD_DIR/build.log"
+        # Have sudo inherit the PATH to ensure it finds the right python
+        sudo env "PATH=$PATH" bash -c "$PYTHONBIN setup.py build_exe | sudo tee $BUILD_DIR/build.log"
     fi
 
 
