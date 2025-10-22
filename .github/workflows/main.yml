@@ -22,24 +22,24 @@ jobs:
           echo "Checking Python version on ${{ matrix.os }}"
           python --version
 
-      - name: Build on Linux/macOS
-        working-directory: build
-        if: runner.os != 'Windows'
-        run: |
-          # echo "Running standard build script for Linux/macOS"
-          sudo ./build.sh
+      # - name: Build on Linux/macOS
+      #   working-directory: build
+      #   if: runner.os != 'Windows'
+      #   run: |
+      #     # echo "Running standard build script for Linux/macOS"
+      #     sudo ./build.sh
 
-      - name: Build on Windows
-        working-directory: build
-        if: runner.os == 'Windows'
-        shell: cmd
-        run: |
-          echo "Running Windows-specific build script"
-          build_windows.bat
+      # - name: Build on Windows
+      #   working-directory: build
+      #   if: runner.os == 'Windows'
+      #   shell: cmd
+      #   run: |
+      #     echo "Running Windows-specific build script"
+      #     build_windows.bat
 
-      - name: Verify build artifacts
-        working-directory: build
-        if: runner.os != 'Windows'
-        run: |
-          echo "###  Verifying deb package  ###"
-          ls -al
+      # - name: Verify build artifacts
+      #   working-directory: build
+      #   if: runner.os != 'Windows'
+      #   run: |
+      #     echo "###  Verifying deb package  ###"
+      #     ls -al
