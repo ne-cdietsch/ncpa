@@ -30,7 +30,7 @@ jobs:
         if: runner.os != 'Windows'
         run: |
           # echo "Running standard build script for Linux/macOS"
-          sudo ./build.sh
+          ./build.sh
 
       - name: Build on Windows
         working-directory: build
