@@ -47,9 +47,10 @@ jobs:
           echo "###  Verifying deb package  ###"
           ls -al
 
-      # - name: Upload macOS build artifact
-      #   if: runner.os == 'macOS'
-      #   uses: actions/upload-artifact@v3
-      #   with:
-      #     name: macOS-build-artifact  
-      #     path: build/*.dmg
+      - name: Upload macOS build artifact
+        if: runner.os == 'macOS'
+        uses: actions/upload-artifact@v4
+        with:
+          name: macOS-build-artifact  
+          path: build/*.dmg
+          overwrite: true
