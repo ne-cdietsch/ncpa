@@ -118,7 +118,7 @@ detect_python() {
             run_as_user brew uninstall --ignore-dependencies python@3.13 || true
             sudo rm -rf /usr/local/Cellar/python@3.13/
             run_as_user brew uninstall --ignore-dependencies openssl@3 || true
-            sudo rm -rf /usr/local/opt/openssl@3
+            sudo rm -rf /usr/local/opt/openssl@3 /usr/local/Cellar/openssl@3/
             sudo rm -rf /usr/local/etc/ca-certificates/
 
             log "Running: brew cleanup"
@@ -134,8 +134,7 @@ detect_python() {
             fi
 
             log "Running: brew install --overwrite python"
-            if ! run_as_user brew install --overwrite python 
-                    && run_as_user brew link --overwrite --force python; then
+            if ! run_as_user brew install --overwrite python; then
                 error "brew install python failed. Please install Python 3.11+ manually."
                 return 1
             fi
