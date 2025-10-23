@@ -133,7 +133,7 @@ detect_python() {
                 return 1
             fi
 
-            log "Running: brew install --overwrite python"
+            log "Running: brew install --overwrite python@3.13"
             if ! run_as_user brew install --overwrite python; then
                 error "brew install python failed. Please install Python 3.11+ manually."
                 return 1
