@@ -30,7 +30,7 @@ jobs:
         if: runner.os != 'Windows'
         run: |
           # echo "Running standard build script for Linux/macOS"
-          ./build.sh
+          sudo ./build.sh
 
       - name: Build on Windows
         working-directory: build
@@ -46,3 +46,10 @@ jobs:
         run: |
           echo "###  Verifying deb package  ###"
           ls -al
+
+      # - name: Upload macOS build artifact
+      #   if: runner.os == 'macOS'
+      #   uses: actions/upload-artifact@v3
+      #   with:
+      #     name: macOS-build-artifact  
+      #     path: build/*.dmg
