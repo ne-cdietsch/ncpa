@@ -53,21 +53,31 @@ run_as_user() {
     fi
 }
 
-# Source platform-specific initialization
+# Detect specific Linux distribution and version and do platform-specific setup
 detect_linux_distro() {
     if [[ "$PLATFORM" == "linux" ]]; then
         echo "***** sourcing linux/init.sh"
         source "linux/init.sh"
 
-        UNSUPPORTED_MESSAGE="Unsupported OS version detected. Consider installing Python 3.13 from source or using an alternative installation method."
-
+        UNSUPPORTED_MESSAGE=$(cat << EOF
+        "Unsupported OS version detected. The NCPA build script is unable to automatically install Python 3.13 for your Linux distribution version. 
+        Consider installing Python 3.13 from source or using an alternative installation method."
+        EOF
+        )
+        
         case "$distro" in
             "RHEL" )
                 echo "Setting PLATFORM to rhel"
                 if [[ "$ver" == 9 ]]; then
                     echo "Detected RHEL 9"
+                    echo "Enabling EPEL repository for RHEL 9"
+                    dnf install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm
+
                 elif [[ "$ver" == 10 ]]; then
                     echo "Detected RHEL 10"
+                    echo "Enabling codeready-builder repository for RHEL 10"
+                    subscription-manager repos --enable codeready-builder-for-rhel-10-$(arch)-rpms
+
                 else
                     echo "Detected RHEL version: $version"
                     echo "$UNSUPPORTED_MESSAGE"
@@ -77,6 +87,9 @@ detect_linux_distro() {
                 echo "Setting PLATFORM to oracle"
                 if [[ "$ver" == 9 ]]; then
                     echo "Detected Oracle Linux 9"
+                    echo "Enabling codeready-builder repository for Oracle Linux 9"
+                    dnf config-manager --enable ol9_codeready_builder
+
                 else
                     echo "Detected Oracle Linux version: $version"
                     echo "$UNSUPPORTED_MESSAGE"
