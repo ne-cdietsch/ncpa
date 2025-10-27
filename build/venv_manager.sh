@@ -59,67 +59,63 @@ detect_linux_distro() {
         echo "***** sourcing linux/init.sh"
         source "linux/init.sh"
 
+        UNSUPPORTED_MESSAGE="Unsupported OS version detected. Consider installing Python 3.13 from source or using an alternative installation method."
+
         case "$distro" in
             "RHEL" )
                 echo "Setting PLATFORM to rhel"
-                if [[ "$ver" == 8 ]]; then
-                    echo "Detected RHEL 8"
-                elif [[ "$ver" == 9 ]]; then
-                    echo "Detected RHEL 8"
+                if [[ "$ver" == 9 ]]; then
+                    echo "Detected RHEL 9"
                 elif [[ "$ver" == 10 ]]; then
                     echo "Detected RHEL 10"
                 else
                     echo "Detected RHEL version: $version"
+                    echo "$UNSUPPORTED_MESSAGE"
                 fi
                 ;;
             "Oracle" )
                 echo "Setting PLATFORM to oracle"
-                if [[ "$ver" == 8 ]]; then
-                    echo "Detected Oracle Linux 8"
-                elif [[ "$ver" == 9 ]]; then
+                if [[ "$ver" == 9 ]]; then
                     echo "Detected Oracle Linux 9"
                 else
                     echo "Detected Oracle Linux version: $version"
+                    echo "$UNSUPPORTED_MESSAGE"
                 fi
                 ;;
             "CentOS" )
                 echo "Setting PLATFORM to centos"
-                if [[ "$ver" == 8 ]]; then
-                    echo "Detected CentOS 8"
-                elif [[ "$ver" == 9 ]]; then
+                if [[ "$ver" == 9 ]]; then
                     echo "Detected CentOS 9"
                 elif [[ "$ver" == 10 ]]; then
                     echo "Detected CentOS 10"
                 else
                     echo "Detected CentOS version: $version"
+                    echo "$UNSUPPORTED_MESSAGE"
                 fi
                 ;;
             "Debian" )
                 echo "Setting PLATFORM to debian"
-                if [[ "$ver" == 11 ]]; then
-                    echo "Detected Debian 11"
-                elif [[ "$ver" == 12 ]]; then
+                if [[ "$ver" == 12 ]]; then
                     echo "Detected Debian 12"
-                elif [[ "$ver" == 13 ]]; then
-                    echo "Detected Debian 13"
                 else
                     echo "Detected Debian version: $version"
+                    echo "$UNSUPPORTED_MESSAGE"
                 fi
                 ;;
             "Ubuntu" )
                 echo "Setting PLATFORM to ubuntu"
-                if [[ "$ver" == 20.04 ]]; then
-                    echo "Detected Ubuntu 20.04"
-                elif [[ "$ver" == 22.04 ]]; then
+                if [[ "$ver" == 22.04 ]]; then
                     echo "Detected Ubuntu 22.04"
                 elif [[ "$ver" == 24.04 ]]; then
                     echo "Detected Ubuntu 24.04"
                 else
                     echo "Detected Ubuntu version: $version"
+                    echo "$UNSUPPORTED_MESSAGE"
                 fi
                 ;;
             *)
                 echo "Setting PLATFORM to generic_linux"
+                echo "$UNSUPPORTED_MESSAGE"
                 ;;
         esac
     fi
