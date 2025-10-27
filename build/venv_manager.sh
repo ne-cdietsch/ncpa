@@ -53,6 +53,78 @@ run_as_user() {
     fi
 }
 
+# Source platform-specific initialization
+function detect_linux_distro() {
+    if [[ "$PLATFORM" == "linux" ]]; then
+        echo "***** sourcing linux/init.sh"
+        source "linux/init.sh"
+
+        case "$distro" in
+            "RHEL" )
+                echo "Setting PLATFORM to rhel"
+                if [[ "$ver" == 8 ]]; then
+                    echo "Detected RHEL 8"
+                elif [[ "$ver" == 9 ]]; then
+                    echo "Detected RHEL 8"
+                elif [[ "$ver" == 10 ]]; then
+                    echo "Detected RHEL 10"
+                else
+                    echo "Detected RHEL version: $version"
+                fi
+                ;;
+            "Oracle" )
+                echo "Setting PLATFORM to oracle"
+                if [[ "$ver" == 8 ]]; then
+                    echo "Detected Oracle Linux 8"
+                elif [[ "$ver" == 9 ]]; then
+                    echo "Detected Oracle Linux 9"
+                else
+                    echo "Detected Oracle Linux version: $version"
+                fi
+                ;;
+            "CentOS" )
+                echo "Setting PLATFORM to centos"
+                if [[ "$ver" == 8 ]]; then
+                    echo "Detected CentOS 8"
+                elif [[ "$ver" == 9 ]]; then
+                    echo "Detected CentOS 9"
+                elif [[ "$ver" == 10 ]]; then
+                    echo "Detected CentOS 10"
+                else
+                    echo "Detected CentOS version: $version"
+                fi
+                ;;
+            "Debian" )
+                echo "Setting PLATFORM to debian"
+                if [[ "$ver" == 11 ]]; then
+                    echo "Detected Debian 11"
+                elif [[ "$ver" == 12 ]]; then
+                    echo "Detected Debian 12"
+                elif [[ "$ver" == 13 ]]; then
+                    echo "Detected Debian 13"
+                else
+                    echo "Detected Debian version: $version"
+                fi
+                ;;
+            "Ubuntu" )
+                echo "Setting PLATFORM to ubuntu"
+                if [[ "$ver" == 20.04 ]]; then
+                    echo "Detected Ubuntu 20.04"
+                elif [[ "$ver" == 22.04 ]]; then
+                    echo "Detected Ubuntu 22.04"
+                elif [[ "$ver" == 24.04 ]]; then
+                    echo "Detected Ubuntu 24.04"
+                else
+                    echo "Detected Ubuntu version: $version"
+                fi
+                ;;
+            *)
+                echo "Setting PLATFORM to generic_linux"
+                ;;
+        esac
+    fi
+}
+
 # Python version detection with preference for configured version
 detect_python() {
     local rerun="${1:-true}"
@@ -219,6 +291,7 @@ detect_python() {
     PY_CMD="python${PY_REQ_MAJOR}.${PY_REQ_MINOR}"
 
     if [ "$PLATFORM" = "linux" ]; then
+        detect_linux_distro()
         if command -v apt-get >/dev/null 2>&1; then
             # Debian/Ubuntu
             sudo apt-get update
