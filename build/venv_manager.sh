@@ -59,11 +59,9 @@ detect_linux_distro() {
         echo "***** sourcing linux/init.sh"
         source "linux/init.sh"
 
-        UNSUPPORTED_MESSAGE=$(cat << EOF
-        "Unsupported OS version detected. The NCPA build script is unable to automatically install Python 3.13 for your Linux distribution version. 
+        UNSUPPORTED_MESSAGE="Unsupported OS version detected. The NCPA build script is unable to automatically install Python 3.13 for your distribution version. \ 
         Consider installing Python 3.13 from source or using an alternative installation method."
-        EOF
-        )
+
         
         case "$distro" in
             "RHEL" )
