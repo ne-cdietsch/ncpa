@@ -54,7 +54,7 @@ run_as_user() {
 }
 
 # Source platform-specific initialization
-function detect_linux_distro() {
+detect_linux_distro() {
     if [[ "$PLATFORM" == "linux" ]]; then
         echo "***** sourcing linux/init.sh"
         source "linux/init.sh"
@@ -291,7 +291,7 @@ detect_python() {
     PY_CMD="python${PY_REQ_MAJOR}.${PY_REQ_MINOR}"
 
     if [ "$PLATFORM" = "linux" ]; then
-        detect_linux_distro()
+        detect_linux_distro
         if command -v apt-get >/dev/null 2>&1; then
             # Debian/Ubuntu
             sudo apt-get update
