@@ -20,7 +20,10 @@ BUILD_LOG="$SCRIPT_DIR/venv_setup.log"
 # Platform detection
 UNAME=$(uname)
 case "$UNAME" in
-    "Linux")   PLATFORM="linux" ;;
+    "Linux")
+        PLATFORM="linux"
+        source "linux/init.sh"
+        ;;
     "Darwin")  PLATFORM="macos" ;;
     "SunOS"|"Solaris") PLATFORM="solaris" ;;
     "AIX")     PLATFORM="aix" ;;
@@ -50,85 +53,6 @@ run_as_user() {
         sudo -u "$original_user" "$@"
     else
         "$@"
-    fi
-}
-
-# Detect specific Linux distribution and version and do platform-specific setup
-detect_linux_distro() {
-    if [[ "$PLATFORM" == "linux" ]]; then
-        echo "***** sourcing linux/init.sh"
-        source "linux/init.sh"
-
-        UNSUPPORTED_MESSAGE="Unsupported OS version detected. The NCPA build script is unable to automatically install Python 3.13 for your distribution version. \ 
-        Consider installing Python 3.13 from source or using an alternative installation method."
-
-        
-        case "$distro" in
-            "RHEL" )
-                echo "Setting PLATFORM to rhel"
-                if [[ "$ver" == 9 ]]; then
-                    echo "Detected RHEL 9"
-                    echo "Enabling EPEL repository for RHEL 9"
-                    dnf install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm
-
-                elif [[ "$ver" == 10 ]]; then
-                    echo "Detected RHEL 10"
-                    echo "Enabling codeready-builder repository for RHEL 10"
-                    subscription-manager repos --enable codeready-builder-for-rhel-10-$(arch)-rpms
-
-                else
-                    echo "Detected RHEL version: $version"
-                    echo "$UNSUPPORTED_MESSAGE"
-                fi
-                ;;
-            "Oracle" )
-                echo "Setting PLATFORM to oracle"
-                if [[ "$ver" == 9 ]]; then
-                    echo "Detected Oracle Linux 9"
-                    echo "Enabling codeready-builder repository for Oracle Linux 9"
-                    dnf config-manager --enable ol9_codeready_builder
-
-                else
-                    echo "Detected Oracle Linux version: $version"
-                    echo "$UNSUPPORTED_MESSAGE"
-                fi
-                ;;
-            "CentOS" )
-                echo "Setting PLATFORM to centos"
-                if [[ "$ver" == 9 ]]; then
-                    echo "Detected CentOS 9"
-                elif [[ "$ver" == 10 ]]; then
-                    echo "Detected CentOS 10"
-                else
-                    echo "Detected CentOS version: $version"
-                    echo "$UNSUPPORTED_MESSAGE"
-                fi
-                ;;
-            "Debian" )
-                echo "Setting PLATFORM to debian"
-                if [[ "$ver" == 12 ]]; then
-                    echo "Detected Debian 12"
-                else
-                    echo "Detected Debian version: $version"
-                    echo "$UNSUPPORTED_MESSAGE"
-                fi
-                ;;
-            "Ubuntu" )
-                echo "Setting PLATFORM to ubuntu"
-                if [[ "$ver" == 22.04 ]]; then
-                    echo "Detected Ubuntu 22.04"
-                elif [[ "$ver" == 24.04 ]]; then
-                    echo "Detected Ubuntu 24.04"
-                else
-                    echo "Detected Ubuntu version: $version"
-                    echo "$UNSUPPORTED_MESSAGE"
-                fi
-                ;;
-            *)
-                echo "Setting PLATFORM to generic_linux"
-                echo "$UNSUPPORTED_MESSAGE"
-                ;;
-        esac
     fi
 }
 
@@ -298,7 +222,6 @@ detect_python() {
     PY_CMD="python${PY_REQ_MAJOR}.${PY_REQ_MINOR}"
 
     if [ "$PLATFORM" = "linux" ]; then
-        detect_linux_distro
         if command -v apt-get >/dev/null 2>&1; then
             # Debian/Ubuntu
             sudo apt-get update
@@ -315,6 +238,11 @@ detect_python() {
             }
 
         elif command -v dnf >/dev/null 2>&1; then
+            if [ "$distro" == "RHEL" ] && [ "$ver" == 9 ]; then
+                echo "Detected RHEL 9"
+                echo "Enabling EPEL repository for RHEL 9"
+                dnf install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm
+            fi
             # Fedora/RHEL (dnf)
             sudo dnf clean all -y >/dev/null 2>&1 || true
             if ! dnf list "${PY_PKG_VER}" >/dev/null 2>&1; then
