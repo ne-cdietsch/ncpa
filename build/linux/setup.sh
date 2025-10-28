@@ -92,7 +92,7 @@ install_prereqs() {
             fi
         fi
 
-        if [ "$distro" == "RHEL" ] && [ "$dist" == "el10"]; then
+        if [ "$distro" == "RHEL" ] && [ "$dist" == "el10" ]; then
             echo "Enabling codeready-builder repository for RHEL 10"
             subscription-manager repos --enable codeready-builder-for-rhel-10-$(arch)-rpms
         fi

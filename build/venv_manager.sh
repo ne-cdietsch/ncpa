@@ -20,10 +20,7 @@ BUILD_LOG="$SCRIPT_DIR/venv_setup.log"
 # Platform detection
 UNAME=$(uname)
 case "$UNAME" in
-    "Linux")
-        PLATFORM="linux"
-        source "linux/init.sh"
-        ;;
+    "Linux") PLATFORM="linux" ;;
     "Darwin")  PLATFORM="macos" ;;
     "SunOS"|"Solaris") PLATFORM="solaris" ;;
     "AIX")     PLATFORM="aix" ;;
@@ -238,11 +235,6 @@ detect_python() {
             }
 
         elif command -v dnf >/dev/null 2>&1; then
-            if [ "$distro" == "RHEL" ] && [ "$ver" == 9 ]; then
-                echo "Detected RHEL 9"
-                echo "Enabling EPEL repository for RHEL 9"
-                dnf install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm
-            fi
             # Fedora/RHEL (dnf)
             sudo dnf clean all -y >/dev/null 2>&1 || true
             if ! dnf list "${PY_PKG_VER}" >/dev/null 2>&1; then
@@ -251,6 +243,8 @@ detect_python() {
                 sudo dnf config-manager --set-enabled crb >/dev/null 2>&1 || true
                 # Install EPEL (RHEL/Rocky/Alma)
                 sudo dnf install -y epel-release >/dev/null 2>&1 || true
+                # Install EPEL (RHEL 9)
+                sudo dnf install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm >/dev/null 2>&1 || true
             fi
             if dnf list "${PY_PKG_VER}" >/dev/null 2>&1; then
                 sudo dnf install -y "${PY_PKG_VER}"
