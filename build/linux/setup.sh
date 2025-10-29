@@ -86,11 +86,12 @@ install_prereqs() {
                 dnf -y install sudo
                 if [ "$dist" == "ol9" ]; then
                     dnf -y install zlib-devel openssl-devel
-                    echo "##################  DEBUG  ####################"
-                    echo "Enabling codeready-builder repository for Oracle Linux 9"
-                    dnf config-manager --enable ol9_codeready_builder
-                    echo "##################  END DEBUG  ####################"
                 fi
+            fi
+
+            if [ $dist == "el9" ]; then
+                echo "Enabling codeready-builder repository for Oracle 9"
+                dnf config-manager --enable ol9_codeready_builder
             fi
         fi
 

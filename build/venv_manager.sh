@@ -243,7 +243,8 @@ detect_python() {
                 sudo dnf config-manager --set-enabled crb >/dev/null 2>&1 || true
                 # Install EPEL (RHEL/Rocky/Alma)
                 sudo dnf install -y epel-release >/dev/null 2>&1 || true
-                # Install EPEL (RHEL 9)
+                # Fallback Install EPEL (RHEL 9)
+                # This will also install on RHEL 10, this is probably suboptimal but works for now
                 sudo dnf install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm >/dev/null 2>&1 || true
             fi
             if dnf list "${PY_PKG_VER}" >/dev/null 2>&1; then
