@@ -248,6 +248,7 @@ class Listener(Base):
     def run(self):
         self.init_logger('listener')
         logger = self.logger
+        logger.info("Starting Listener")
         logger.info("run()")
 
         try:
@@ -387,6 +388,7 @@ class Passive(Base):
     def run(self):
         self.init_logger('passive')
         logger = self.logger
+        logger.info("Starting Passive")
         logger.info("run()")
 
         # Check if there is a start delay
@@ -962,6 +964,8 @@ if __SYSTEM__ == 'nt':
 
             self.setup_plugins()
             self.logger.debug("Looking for plugins at: %s" % self.abs_plugin_path)
+
+
         def init_logger(self, logger_name):
             self.logger = logging.getLogger(logger_name)
             logfile = get_filename(self.config.get(logger_name, 'logfile'))
