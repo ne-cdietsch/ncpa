@@ -81,22 +81,22 @@ $env:Path += ";C:\Program Files (x86)\Microsoft Visual Studio\2022\BuildTools\MS
 $rebootRequired = $false
 
 # Check for Component-Based Servicing registry key
-if (Test-Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Component Based Servicing\RebootPending") {
-    $rebootRequired = $true
-}
-# Check for Windows Update registry key
-if (Test-Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsUpdate\Auto Update\RebootRequired") {
-    $rebootRequired = $true
-}
-# Check for PendingFileRenameOperations registry key
-$pendingFileRename = Get-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager" -Name PendingFileRenameOperations -ErrorAction SilentlyContinue
-if ($pendingFileRename) {
-    $rebootRequired = $true
-}
-if ($rebootRequired) {
-    Write-Host "A system reboot is pending. Exiting..."
-    exit 1
-}
+# if (Test-Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Component Based Servicing\RebootPending") {
+#     $rebootRequired = $true
+# }
+# # Check for Windows Update registry key
+# if (Test-Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsUpdate\Auto Update\RebootRequired") {
+#     $rebootRequired = $true
+# }
+# # Check for PendingFileRenameOperations registry key
+# $pendingFileRename = Get-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager" -Name PendingFileRenameOperations -ErrorAction SilentlyContinue
+# if ($pendingFileRename) {
+#     $rebootRequired = $true
+# }
+# if ($rebootRequired) {
+#     Write-Host "A system reboot is pending. Exiting..."
+#     exit 1
+# }
 
 
 [System.Console]::BackgroundColor = $sysBGColor
