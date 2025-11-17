@@ -2,7 +2,7 @@ name: Matrix Builds
 
 on:
   push:
-    branches: [ 'development-v3' ]
+    branches: [ 'cpd-testing-github-actions-for-builds']
 
 jobs:
   build-and-test:
